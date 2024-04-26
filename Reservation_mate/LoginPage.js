@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 
 const LoginPage = ({ navigation }) => {
   const handleLogin = () => {
-    navigation.navigate('Navigation');
+    navigation.navigate('MainScreen');
   };
 
   return (
@@ -14,6 +14,12 @@ const LoginPage = ({ navigation }) => {
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>로그인</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+              style={styles.signupButton}
+              onPress={() => navigation.navigate('SignUpScreen')}
+            >
+            <Text style={styles.signupButtonText}>회원가입</Text>
+            </TouchableOpacity>
     </View>
   );
 };

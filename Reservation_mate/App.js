@@ -2,7 +2,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginPage from './LoginPage';
-import Navigation from './Navigation';
+import MainScreen from './Main/MainScreen';
+import GymScreen from './Gym/GymScreen';
+import BusScreen from './Bus/BusScreen';
+import SignUpScreen from './SignUp/Screen';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +19,23 @@ const App = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Navigation"
-          component={Navigation}
+          name="MainScreen"
+          component={MainScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GymScreen"
+          component={GymScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="BusScreen"
+          component={BusScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
