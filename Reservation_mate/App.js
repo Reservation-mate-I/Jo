@@ -5,7 +5,7 @@ import LoginPage from './LoginPage';
 import MainScreen from './Main/MainScreen';
 import GymScreen from './Gym/GymScreen';
 import BusScreen from './Bus/BusScreen';
-import SignUpScreen from './SignUp/Screen';
+import SignUpScreen from './SignUp/SignUpScreen';
 
 const Stack = createStackNavigator();
 
