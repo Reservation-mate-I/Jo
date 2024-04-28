@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const MainScreen = ({ navigation }) => {
   const handleGym = () => {
-    navigation.navigate('GymScreen');
+    navigation.navigate('GymRvmain');
   };
   const handleBus = () => {
     navigation.navigate('BusScreen');

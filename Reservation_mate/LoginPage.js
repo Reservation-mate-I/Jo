@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useUser} from './UserContext';
 import { loginUser } from './Database/firebaseService';
+import { useNavigation } from '@react-navigation/native';
 import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, StyleSheet, ImageBackground, Alert } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { getDatabase, ref, get } from 'firebase/database';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const LoginPage = ({ navigation }) => {
+const LoginPage = () => {
   const [id, setId] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = useState(false);
-    const { setUserId } = useUser();
+    const { userId, setUserId } = useUser();
+    const navigation = useNavigation();
 
   const handleLogin = async () => {
     if (!id || !password) {
@@ -41,7 +40,6 @@ const LoginPage = ({ navigation }) => {
       setLoading(false);
     }
   };
-
 
   return (
     <View style={styles.container}>
