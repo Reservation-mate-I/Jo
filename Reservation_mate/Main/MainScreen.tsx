@@ -1,18 +1,25 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const MainScreen = ({ navigation }) => {
+const MainScreen = ({ navigation, route }) => {
   const handleGym = () => {
     navigation.navigate('GymRvmain');
   };
   const handleBus = () => {
     navigation.navigate('BusScreen');
   };
+  const { userId } = route.params;
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>메인 화면</Text>
-      <Text>메인 화면 컨텐츠...</Text>
+      <View>
+        {userId === '관리자' ? (
+          <Text>관리자님 환영합니다!</Text>
+        ) : (
+          <Text>{userId}님 환영합니다!</Text>
+        )}
+      </View>
       <TouchableOpacity style={styles.GymButton} onPress={handleGym}>
         <Text style={styles.GymButtonText}>체육관</Text>
       </TouchableOpacity>

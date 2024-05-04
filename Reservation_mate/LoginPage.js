@@ -12,6 +12,8 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const { userId, setUserId } = useUser();
     const navigation = useNavigation();
+    const managerId = "1";
+    const managerPw = "1";
 
   const handleLogin = async () => {
     if (!id || !password) {
@@ -20,12 +22,17 @@ const LoginPage = () => {
     }
     try {
       setLoading(true);
+      if (id === managerId && password === managerPw) {
+        setUserId(managerId);
+        navigation.navigate('MainScreen', { userId: "관리자" }); // 관리자 전용 화면으로 이동
+        return;
+      }
       const isLoggedIn = await loginUser(id, password);
-  
       if (isLoggedIn) {
         setUserId(id);
-        navigation.navigate('MainScreen');
-      } else {
+        navigation.navigate('MainScreen', { userId: id });
+      } 
+      else {
           Alert.alert(
             "로그인 실패",
             "ID 또는 PW가 일치하지 않습니다.",
