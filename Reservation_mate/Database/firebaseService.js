@@ -1,6 +1,5 @@
 import { getDatabase, ref, get } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
-import firebase from 'firebase/compat/app';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBEDzmVpp-24DBZLDxd23zSk_Jw8zX_rac",
@@ -13,7 +12,8 @@ const firebaseConfig = {
     measurementId: "G-HF4VV6PKW7"
   };
   
-const app = initializeApp(firebaseConfig);
+const firebaseService = initializeApp(firebaseConfig);
+const database = getDatabase(firebaseService);
 
 export const loginUser = async (id, password) => {
     try {
@@ -28,4 +28,4 @@ export const loginUser = async (id, password) => {
     }
 };
 
-export default firebase;
+export default firebaseService;
