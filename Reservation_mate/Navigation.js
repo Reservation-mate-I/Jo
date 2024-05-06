@@ -10,6 +10,8 @@ import SportsCenter from './Gym/GymCategory/SportsCenter';
 import BusScreen from './Bus/BusScreen';
 import SignUpScreen from './SignUp/SignUpScreen';
 import LoginPage from './LoginPage';
+import MyPage from './MyPage/MyPage';
+import RS_Check from './RS_Check/RS_Check';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +26,8 @@ function StackScreen(){
       <Stack.Screen name="BusScreen" component={BusScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }} />
       <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
+      <Stack.Screen name="MyPage" component={MyPage} options={{ headerShown: false }} />
+      <Stack.Screen name="RS_Check" component={RS_Check} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

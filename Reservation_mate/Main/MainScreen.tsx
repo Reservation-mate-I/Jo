@@ -8,6 +8,9 @@ const MainScreen = ({ navigation, route }) => {
   const handleBus = () => {
     navigation.navigate('BusScreen');
   };
+  const handleRS_Check = () => {
+    navigation.navigate('RS_Check');
+  };
   const { userId } = route.params;
 
   return (
@@ -25,6 +28,9 @@ const MainScreen = ({ navigation, route }) => {
       </TouchableOpacity>
       <TouchableOpacity style={styles.BusButton} onPress={handleBus}>
         <Text style={styles.BusButtonText}>버스</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.RS_CheckButton} onPress={handleRS_Check}>
+        <Text style={styles.RS_CheckButtonText}>RS_Check</Text>
       </TouchableOpacity>
     </View>
   );
@@ -57,6 +63,26 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   BusButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  MyButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: 'lightblue',
+    borderRadius: 5,
+  },
+  MyButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  RS_CheckButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: 'lightblue',
+    borderRadius: 5,
+  },
+  RS_CheckButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
   },
