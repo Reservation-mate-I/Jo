@@ -4,7 +4,7 @@ import { useUser, UserProvider } from '../UserContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import firebaseService from '../Database/firebaseService';
-import { getDatabase, ref, get } from 'firebase/database';
+import { getDatabase, ref, get, remove } from 'firebase/database';
 
 const RS_Check = () => {
   const { userId } = useUser();
@@ -40,10 +40,35 @@ const RS_Check = () => {
     // 예약 변경 처리 로직
   };
 
-  const handleReservationCancel = (index) => {
-    // 예약 취소 처리 로직
-  };
+  const handleReservationCancel = async (index) => {
+    try {
+      const db = getDatabase(firebaseService);
+      const reservationToRemove = reservationData[index];
+  
+      // 'Date' 속성을 통해 삭제할 예약의 날짜를 확인합니다.
+      const formattedDate = reservationToRemove.Date;
+      const location = reservationToRemove.location;
 
+      // 예약 데이터베이스의 위치를 참조합니다.
+      const reservationRef = ref(db, `reservations/${location}/${formattedDate}`);
+      const RSDataRef = ref(db, `reservations/RSData/${userId}/${reservationToRemove.location}`);
+  
+      // 예약을 삭제합니다.
+      await remove(reservationRef);
+      await remove(RSDataRef);
+  
+      // 예약 데이터 상태를 업데이트하여 UI를 갱신합니다.
+      const updatedReservations = [...reservationData];
+      updatedReservations.splice(index, 1);
+      setReservationData(updatedReservations);
+  
+      Alert.alert('알림', '예약이 성공적으로 취소되었습니다!');
+    } catch (error) {
+      console.error("Error canceling reservation:", error);
+      Alert.alert('알림', '예약 취소 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
+  };
+  
   return (
     <UserProvider>
       <View>

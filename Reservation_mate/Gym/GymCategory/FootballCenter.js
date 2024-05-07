@@ -48,7 +48,6 @@ const FootballCenter = () => {
     const RSData = {
       Date: selectedDate, 
       Time: RSTime, 
-      Location: RSFLocation,
     };
   
     try {

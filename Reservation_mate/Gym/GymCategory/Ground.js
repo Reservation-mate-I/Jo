@@ -47,8 +47,7 @@ const Ground = () => {
     const RSFLocation = "Ground";
     const RSData = {
       Date: selectedDate, 
-      Time: RSTime, 
-      Location: RSFLocation,
+      Time: RSTime,
     };
   
     try {

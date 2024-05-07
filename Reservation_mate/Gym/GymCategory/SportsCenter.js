@@ -40,6 +40,13 @@ const SportsCenter = () => {
     }
   
     const formattedDate = selectedDate;
+    const reservationDataobject = {
+      [userId]: {
+        startTime: new Date(selectedStartTime),
+        endTime: new Date(selectedEndTime),
+      }
+    };
+    
     const reservationData = {
       [userId]: selectedStartTime + '-' + selectedEndTime,
     };
