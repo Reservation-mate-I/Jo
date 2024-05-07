@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { getDatabase, ref, set, get } from 'firebase/database';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground,  BackHandler } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/Ionicons'; // 사용할 아이콘 라이브러리 선택
 import { LinearGradient } from 'expo-linear-gradient';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { sendVerificationCode, verifyCode, verify } from '../Database/firebaseService'; // verify 함수를 import
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
@@ -14,12 +15,22 @@ const SignUpScreen = () => {
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [name, setName] = React.useState('');
   const [phone, setPhone] = React.useState('');
+  const [verificationId, setVerificationId] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
 
   const validatePassword = (pw) => {
     const re = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{4,12}$/;
     return re.test(pw);
   };
 
+  const handleSendCode = async () => {
+    await sendVerificationCode(phone, setVerificationId, Alert);
+  };
+  
+  const handleVerifyCode = async () => {
+    await verifyCode(verificationId, verificationCode, Alert);
+  };
+  
   const handleSignUp = async () => {
     const db = getDatabase();
 
@@ -126,13 +137,24 @@ const SignUpScreen = () => {
             onChangeText={setPhone}
           />
         </View>
-        <View style = {styles.bodyfirst}>
-        <TouchableOpacity
-          style={styles.signupButton}
-          onPress={handleSignUp}
-        >
-          <Text style={styles.signupfont}>가입하기</Text>
+        <TouchableOpacity onPress={handleSendCode}>
+          <Text>인증 코드 전송</Text>
         </TouchableOpacity>
+        <TextInput
+          placeholder="인증 코드"
+          value={verificationCode}
+          onChangeText={setVerificationCode}
+        />
+        <TouchableOpacity onPress={handleVerifyCode}>
+          <Text>인증 코드 확인</Text>
+        </TouchableOpacity>
+        <View style = {styles.bodyfirst}>
+          <TouchableOpacity
+            style={styles.signupButton}
+            onPress={handleSignUp}
+          >
+            <Text style={styles.signupfont}>가입하기</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style = {styles.bottomContainer}>

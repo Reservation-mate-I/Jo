@@ -6,7 +6,7 @@ import { useUser, UserProvider } from '../../UserContext';
 import DatePicker from '../DandT/Date/DatePicker';
 import STimePicker from '../DandT/Time/STimePicker'; 
 import ETimePicker from '../DandT/Time/ETimePicker';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get } from 'firebase/database';
 
 const FootballCenter = () => {
   const { userId } = useUser();
@@ -36,6 +36,22 @@ const FootballCenter = () => {
   const handleReservation = async () => {
     if (!selectedDate || !selectedStartTime || !selectedEndTime) {
       Alert.alert('알림', '날짜와 시간을 선택해주세요!');
+      return;
+    }
+    try {
+      const db = getDatabase();
+      const RSDataRef = ref(db, `reservations/RSData/${userId}`);
+      const snapshot = await get(RSDataRef);
+      const reservationData = snapshot.val();
+  
+      // 만약 이전 예약 데이터가 존재하는 경우 예약을 막고 경고를 표시합니다.
+      if (reservationData) {
+        Alert.alert('알림', '이미 예약한 내역이 있습니다. 새로운 예약을 진행할 수 없습니다.');
+        return;
+      }
+    } catch (error) {
+      console.error("Error checking existing reservation:", error);
+      Alert.alert('알림', '예약 확인 중 오류가 발생했습니다. 다시 시도해주세요.');
       return;
     }
   
