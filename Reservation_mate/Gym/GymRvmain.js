@@ -23,7 +23,7 @@ const GymRvmain = () => {
       <View>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View>
-            <Icon name="ios-arrow-back" size={35}/> 
+            <Icon name="ios-arrow-back" size={100}/> 
           </View>
         </TouchableOpacity>
       </View>

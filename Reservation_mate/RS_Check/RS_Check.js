@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { useUser, UserProvider } from '../UserContext';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +9,7 @@ import { getDatabase, ref, get, remove } from 'firebase/database';
 const RS_Check = () => {
   const { userId } = useUser();
   const navigation = useNavigation();
-  const [reservationData, setReservationData] = useState(null); // 예약 데이터 상태
+  const [reservationData, setReservationData] = useState(null);
 
   useEffect(() => {
     if (userId) {
@@ -37,8 +37,25 @@ const RS_Check = () => {
   }, [userId]);
 
   const handleReservationChange = (index) => {
-    // 예약 변경 처리 로직
+    // reservationData 배열에서 해당 인덱스의 예약 데이터를 가져옵니다.
+    const selectedReservation = reservationData[index];
+  
+    // 선택된 예약의 위치(location)에 따라 적절한 네비게이션 스크린으로 이동합니다.
+    switch (selectedReservation.location) {
+      case 'FootballCenter':
+        navigation.navigate('FootballCenter');
+        break;
+      case 'Ground':
+        navigation.navigate('Ground');
+        break;
+      case 'SportsCenter':
+        navigation.navigate('SportsCenter');
+        break;
+      default:
+        break;
+    }
   };
+  
 
   const handleReservationCancel = async (index) => {
     try {
@@ -74,7 +91,7 @@ const RS_Check = () => {
       <View>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <View>
-            <Icon name="ios-arrow-back" size={35}/>
+            <Icon name="ios-arrow-back" size={100}/>
           </View>
         </TouchableOpacity>
       </View>
