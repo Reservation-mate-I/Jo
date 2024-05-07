@@ -43,12 +43,20 @@ const SportsCenter = () => {
     const reservationData = {
       [userId]: selectedStartTime + '-' + selectedEndTime,
     };
+    const RSTime = selectedStartTime + '-' + selectedEndTime;
+    const RSFLocation = "SportsCenter";
+    const RSData = {
+      Date: selectedDate, 
+      Time: RSTime, 
+    };
   
     try {
       const db = getDatabase();
       const reservationRef = ref(db, 'reservations/' + 'SportsCenter/' + formattedDate);
+      const RSDataRef = ref(db, `reservations/RSData/${userId}/${RSFLocation}`);
       await set(reservationRef, reservationData);
-  
+      await set(RSDataRef, RSData);
+      
       Alert.alert('알림', '예약이 성공적으로 완료되었습니다!');
     } catch (error) {
       console.error(error);
