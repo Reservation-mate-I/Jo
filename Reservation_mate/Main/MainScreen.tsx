@@ -18,7 +18,7 @@ const MainScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <LinearGradient style={styles.headerContainer} colors = {['#DDF3FF', '#DDF3FF']}>
+        <LinearGradient style={styles.headerContainer} colors = {['#bfe1fb', '#bfe1fb']}>
           <View style={styles.imageContainer}>
             <ImageBackground
               source={require('../../assets/GWNU-LOGO.png')}
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     width: '100%', // 전체 가로 설정
   },
   userBackground: {
-    backgroundColor: '#DDF3FF', // 배경색 설정
+    backgroundColor: '#bfe1fb', // 배경색 설정
    
   },
   userText: {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // 세로 중앙 정렬
     justifyContent: 'space-between', // 각 요소를 양 끝으로 분산
     padding: 10, // 버튼 내부의 패딩
-    backgroundColor: '#A8E4FF', // 배경 색상
+    backgroundColor: '#95cdf7', // 배경 색상
   },
   ButtonText: {
     fontSize: 37,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // 세로 중앙 정렬
     justifyContent: 'space-between', // 각 요소를 양 끝으로 분산
     padding: 10, // 버튼 내부의 패딩
-    backgroundColor: '#67C5FF',
+    backgroundColor: '#81c3f6',
   },
 
   MyButton: {
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // 세로 중앙 정렬
     justifyContent: 'space-between', // 각 요소를 양 끝으로 분산
     padding: 10, // 버튼 내부의 패딩
-    backgroundColor: '#2AAEFF',
+    backgroundColor: '#57aff3',
   },
 });
 

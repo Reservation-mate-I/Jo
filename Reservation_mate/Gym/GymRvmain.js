@@ -8,9 +8,12 @@ import { LinearGradient } from 'expo-linear-gradient';  // expo-linear-gradient 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const iconsData = [
-  { id: 1, name: '풋살장', engName: 'FootballCenter', position: { top: 200 } },
-  { id: 2, name: '체육관', engName: 'SportsCenter', position: { top: 300 } },
-  { id: 3, name: '운동장', engName: 'Ground', position: { top: 400 } },
+  { id: 1, name: '풋살장', engName: 'FootballCenter', position: { top: 200 }, 
+  image: require('../../assets/gym-icon.png') },
+  { id: 2, name: '체육관', engName: 'SportsCenter', position: { top: 300 }, 
+  image: require('../../assets/bus-icon.png') },
+  { id: 3, name: '운동장', engName: 'Ground', position: { top: 400 }, 
+  image: require('../../assets/rscheck-icon.png') },
 ];
 
 const GymRvmain = () => {
@@ -25,12 +28,7 @@ const GymRvmain = () => {
       <View>
         
         <View style={styles.header}>
-          <LinearGradient style={styles.headerContainer} colors={['#DDF3FF', '#DDF3FF']}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
-              <Image source={require('../../assets/back-icon.png')} style={styles.backIcon} />
-            </TouchableOpacity>
-
-
+          <LinearGradient style={styles.headerContainer} colors={['#bfe1fb', '#bfe1fb']}>
             <View style={styles.imageContainer}>
               <ImageBackground
                 source={require('../../assets/GWNU-LOGO.png')}
@@ -47,22 +45,30 @@ const GymRvmain = () => {
         </View>
 
         <View style={styles.user}>
-          <View style={styles.userBackground}>
-            {userId && <Text style={styles.userText}>{`${userId}님 환영합니다!`}</Text>}
-          </View>
+        <View style={styles.userBackground}>
+          {userId && <Text style={styles.userText}>{`${userId}님 환영합니다!`}</Text>}
+        </View>
         </View>
 
         <View style={styles.buttonsContainer}>
-          {iconsData.map((icon) => (
-            <TouchableOpacity
-              key={icon.id}
-              onPress={() => handleIconClick(icon.engName)}
-              style={[styles.button, { top: icon.position.top }]}>
+        {iconsData.map((icon) => (
+          <TouchableOpacity
+            key={icon.id}
+            onPress={() => handleIconClick(icon.engName)}
+            style={[styles.button, { top: icon.position.top }]}>
+            <View style={styles.buttonContent}>
+              <Image source={icon.image} style={styles.buttonImage} />
               <Text style={styles.buttonText}>{icon.name}</Text>
-            </TouchableOpacity>
-          ))}
+            </View>
+          </TouchableOpacity>
+))}
         </View>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
+              <ImageBackground source={require('../../assets/back-icon.png')}style={styles.backIcon}
+                resizeMode="contain"/>
+            </TouchableOpacity>
       </View>
+      
     </UserProvider>
   );
 };
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
     width: '100%', // 전체 가로 설정
   },
   userBackground: {
-    backgroundColor: '#DDF3FF', // 배경색 설정
+    backgroundColor: '#bfe1fb', // 배경색 설정
    
   },
   userText: {
@@ -126,30 +132,48 @@ const styles = StyleSheet.create({
   },
   backIconContainer: {
     position: 'absolute', // 절대 위치 지정
-    left: wp('5%'), // 좌측 여백 조정
-    top: hp('6%'), // 상단 여백 조정
+    left: wp('2%'), // 좌측 여백 조정
+    top: hp('5%'), // 상단 여백 조정
   },
   backIcon:{
-    width: wp('5%'),
-    height: hp('5%'),
+    width: wp('7%'),
+    height:hp('7%'),
+
   },
   buttonsContainer: {
     position: 'absolute',
     width: '100%',
     alignItems: 'center',
+    marginTop: hp('3%'),
   },
   button: {
-    backgroundColor: '#DDF3FF',
-    paddingHorizontal: wp('8%'),
-    paddingVertical: hp('2%'),
-    borderRadius: 10,
-    marginVertical: hp('1%'),
-    alignItems: 'center',
+    flexDirection: 'row', // 버튼 안의 요소들을 가로로 정렬하기 위해 필요
+    width: wp('70%'), // 버튼의 너비를 강제로 지정
+    height: hp('20%'), // 버튼의 높이를 강제로 지정
+    backgroundColor: '#95cdf7',
+    borderRadius: 30,
+    marginVertical: hp('-3%'),
+    alignItems: 'center', // 가로 중앙 정렬을 위해 추가
+    justifyContent: 'center', // 세로 중앙 정렬을 위해 추가
+    borderColor: '#60b4f3',
+    borderWidth: 5,
   },
   buttonText: {
-    fontSize: hp('2%'),
+    fontSize: hp('3%'),
     fontWeight: 'bold',
     color: '#343a40',
+    textAlign: 'center',
+  },
+  buttonContent: {
+    width: '100%', // 버튼 컨텐츠의 너비를 100%로 설정하여 이미지가 버튼을 가득 채우도록 함
+    height: '100%', // 버튼 컨텐츠의 높이를 100%로 설정하여 이미지가 버튼을 가득 채우도록 함
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonImage: {
+    width: hp('10%'), // 이미지의 너비를 강제로 지정
+    height: hp('10%'), // 이미지의 높이를 강제로 지정
+    resizeMode: 'contain', // 이미지를 버튼에 맞게 조정
   },
 });
 
