@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ImageBackground, Image, Alert } from 'react-native';
 import { useUser, UserProvider } from '../UserContext';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';  // expo-linear-gradient import
@@ -9,11 +8,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 const iconsData = [
   { id: 1, name: '풋살장', engName: 'FootballCenter', position: { top: 200 }, 
-  image: require('../../assets/gym-icon.png') },
+  image: require('../../assets/football-icon.png') },
   { id: 2, name: '체육관', engName: 'SportsCenter', position: { top: 300 }, 
-  image: require('../../assets/bus-icon.png') },
+  image: require('../../assets/gym-icon.png') },
   { id: 3, name: '운동장', engName: 'Ground', position: { top: 400 }, 
-  image: require('../../assets/rscheck-icon.png') },
+  image: require('../../assets/track-icon.png') },
 ];
 
 const GymRvmain = () => {
@@ -51,17 +50,17 @@ const GymRvmain = () => {
         </View>
 
         <View style={styles.buttonsContainer}>
-        {iconsData.map((icon) => (
-          <TouchableOpacity
-            key={icon.id}
-            onPress={() => handleIconClick(icon.engName)}
-            style={[styles.button, { top: icon.position.top }]}>
-            <View style={styles.buttonContent}>
-              <Image source={icon.image} style={styles.buttonImage} />
-              <Text style={styles.buttonText}>{icon.name}</Text>
-            </View>
-          </TouchableOpacity>
-))}
+          {iconsData.map((icon) => (
+            <TouchableOpacity
+              key={icon.id}
+              onPress={() => handleIconClick(icon.engName)}
+              style={[styles.button, { top: icon.position.top }]}>
+              <View style={styles.buttonContent}>
+                <Image source={icon.image} style={styles.buttonImage} />
+                <Text style={styles.buttonText}>{icon.name}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
               <ImageBackground source={require('../../assets/back-icon.png')}style={styles.backIcon}

@@ -32,6 +32,10 @@ const MainScreen = ({ navigation, route }) => {
           </View>
           <View style={styles.spacer}/>
         </LinearGradient>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
+            <ImageBackground source={require('../../assets/back-icon.png')}style={styles.backIcon}
+                resizeMode="contain"/>
+          </TouchableOpacity>
 
       </View>
       
@@ -146,7 +150,8 @@ const styles = StyleSheet.create({
     color: '#868296',
   },
   imageContainer: {
-    width: wp('22%'),
+    width: wp('22%'), 
+    marginLeft: wp('8%'),
   },
   GymButton: {
     flexDirection: 'row', // 좌우로 나란히 배치
@@ -189,6 +194,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', // 각 요소를 양 끝으로 분산
     padding: 10, // 버튼 내부의 패딩
     backgroundColor: '#57aff3',
+  },
+  backIconContainer: {
+    position: 'absolute', // 절대 위치 지정
+    left: wp('2%'), // 좌측 여백 조정
+    top: hp('5%'), // 상단 여백 조정
+  },
+  backIcon:{
+    width: wp('7%'),
+    height:hp('7%'),
   },
 });
 
