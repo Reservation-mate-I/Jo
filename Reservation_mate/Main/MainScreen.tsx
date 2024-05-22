@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet ,ImageBackground, Image} from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const MainScreen = ({ navigation, route }) => {
   const handleGym = () => {
@@ -15,76 +17,192 @@ const MainScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>메인 화면</Text>
-      <View>
-        {userId === '관리자' ? (
-          <Text>관리자님 환영합니다!</Text>
-        ) : (
-          <Text>{userId}님 환영합니다!</Text>
-        )}
+      <View style={styles.header}>
+        <LinearGradient style={styles.headerContainer} colors = {['#bfe1fb', '#bfe1fb']}>
+          <View style={styles.imageContainer}>
+            <ImageBackground
+              source={require('../../assets/GWNU-LOGO.png')}
+              style={styles.imageStyle}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.textStyle}>국립 강릉원주대학교</Text>
+            <Text style={styles.subHeader}>GANGNEUNG-WONJU NATIONAL UNIVERSITY</Text>
+          </View>
+          <View style={styles.spacer}/>
+        </LinearGradient>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
+            <ImageBackground source={require('../../assets/back-icon.png')}style={styles.backIcon}
+                resizeMode="contain"/>
+          </TouchableOpacity>
+
       </View>
+      
+      <View style={styles.user}>
+        <View style={styles.userBackground}>
+          <Text style={styles.userText}>
+            {userId === '관리자' ? (
+              <Text>관리자님 환영합니다!</Text>
+            ) : (
+              <Text>{userId}님 환영합니다!</Text>
+             )}
+          </Text>
+        </View>
+    </View>
+
       <TouchableOpacity style={styles.GymButton} onPress={handleGym}>
-        <Text style={styles.GymButtonText}>체육관</Text>
+        <View style={styles.buttonContent}>
+            <Image source={require('../../assets/gym-icon.png')} style={{ width: wp('40%') , height:hp('20%'),
+            resizeMode: 'contain' }} />
+        </View>
+        <Text style={styles.ButtonText}>체육관 </Text>
+        <Text style={styles.ArrowText}> {'>'} </Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.BusButton} onPress={handleBus}>
-        <Text style={styles.BusButtonText}>버스</Text>
+        <View style={styles.buttonContent}>
+          <Image source={require('../../assets/bus-icon.png')} style={{ width: wp('40%') , height:hp('20%'),
+          resizeMode: 'contain' }} />
+        </View>
+        <Text style={styles.ButtonText}>버스 </Text>
+        <Text style={styles.ArrowText}> {'>'} </Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.RS_CheckButton} onPress={handleRS_Check}>
-        <Text style={styles.RS_CheckButtonText}>RS_Check</Text>
+        <View style={styles.buttonContent}>
+          <Image source={require('../../assets/rscheck-icon.png')} style={{ width: wp('40%') , height:hp('20%'),
+          resizeMode: 'contain' }} />
+        </View>
+        <Text style={styles.ButtonText}>예약</Text>
+        <Text style={styles.ArrowText}> {'>'} </Text>
       </TouchableOpacity>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
   },
-  GymButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'lightblue',
-    borderRadius: 5,
+  header: {
+    width: '100%',
+    paddingVertical: hp('5%'),
+    alignItems: 'center',
   },
-  GymButtonText: {
-    fontSize: 16,
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  spacer: {
+    width: wp('18%'),
+  },
+  user: {
+    alignSelf: 'flex-start',  
+    marginTop: '5%',
+    width: '100%', // 전체 가로 설정
+  },
+  userBackground: {
+    backgroundColor: '#bfe1fb', // 배경색 설정
+   
+  },
+  userText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: wp('3%'), // 왼쪽 마진 추가
+    padding: 10,
+  },
+  textContainer: {
+    width: wp('60%'),
+    alignItems: 'center',
+  },
+  headerContainer: {
+    width: '100%',
+    height: hp('15%'),
+    position: 'absolute',
+    flexDirection: 'row',
+    top: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageStyle: {
+    top: hp('1%'),
+    width: wp('16%'),
+    height:hp('7%'),
+    left: wp('9%'),
+  },
+  textStyle: {
+    fontSize: hp('3%'), 
+    top: hp('1%'), 
+    fontWeight: 'bold',
+    alignItems: 'center',
+    color: '#343a40',
+  },
+  subHeader: {
+    fontSize: hp('1%'), 
+    top: hp('2%'), 
+    fontWeight: 'bold',
+    color: '#868296',
+  },
+  imageContainer: {
+    width: wp('22%'), 
+    marginLeft: wp('8%'),
+  },
+  GymButton: {
+    flexDirection: 'row', // 좌우로 나란히 배치
+    alignItems: 'center', // 세로 중앙 정렬
+    justifyContent: 'space-between', // 각 요소를 양 끝으로 분산
+    padding: 10, // 버튼 내부의 패딩
+    backgroundColor: '#95cdf7', // 배경 색상
+  },
+  ButtonText: {
+    fontSize: 37,
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+  ArrowText: {
+    fontSize: 47,
+    color: '#FFF',
     fontWeight: 'bold',
   },
   BusButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'lightblue',
-    borderRadius: 5,
+    flexDirection: 'row', // 좌우로 나란히 배치
+    alignItems: 'center', // 세로 중앙 정렬
+    justifyContent: 'space-between', // 각 요소를 양 끝으로 분산
+    padding: 10, // 버튼 내부의 패딩
+    backgroundColor: '#81c3f6',
   },
-  BusButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+
   MyButton: {
     marginTop: 20,
     padding: 10,
     backgroundColor: 'lightblue',
-    borderRadius: 5,
+    borderRadius: 0,
   },
   MyButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
   },
   RS_CheckButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'lightblue',
-    borderRadius: 5,
+    flexDirection: 'row', // 좌우로 나란히 배치
+    alignItems: 'center', // 세로 중앙 정렬
+    justifyContent: 'space-between', // 각 요소를 양 끝으로 분산
+    padding: 10, // 버튼 내부의 패딩
+    backgroundColor: '#57aff3',
   },
-  RS_CheckButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+  backIconContainer: {
+    position: 'absolute', // 절대 위치 지정
+    left: wp('2%'), // 좌측 여백 조정
+    top: hp('5%'), // 상단 여백 조정
+  },
+  backIcon:{
+    width: wp('7%'),
+    height:hp('7%'),
   },
 });
 
