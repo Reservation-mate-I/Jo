@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, Image, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground, Alert, StyleSheet } from 'react-native';
 import { useUser, UserProvider } from '../UserContext';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';  // expo-linear-gradient import
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -16,7 +15,6 @@ const BusScreen = () => {
   return (
     <UserProvider>
       <View>
-        
         <View style={styles.header}>
           <LinearGradient style={styles.headerContainer} colors={['#bfe1fb', '#bfe1fb']}>
             <View style={styles.imageContainer}>
@@ -33,7 +31,6 @@ const BusScreen = () => {
             <View style={styles.spacer}/>
           </LinearGradient>
         </View>
-        
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
               <ImageBackground source={require('../../assets/back-icon.png')}style={styles.backIcon}
                 resizeMode="contain"/>
@@ -145,7 +142,6 @@ const styles = StyleSheet.create({
   backIcon:{
     width: wp('7%'),
     height:hp('7%'),
-
   },
   buttonsContainer: {
     position: 'absolute',
