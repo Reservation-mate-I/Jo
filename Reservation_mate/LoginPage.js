@@ -10,43 +10,39 @@ const LoginPage = () => {
   const [id, setId] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = useState(false);
-    const { userId, setUserId } = useUser();
+    const {setUserId } = useUser();
     const navigation = useNavigation();
     const managerId = "1";
     const managerPw = "1";
 
-  const handleLogin = async () => {
-    if (!id || !password) {
-      Alert.alert("오류", "아이디와 비밀번호를 모두 입력해주세요.", { cancelable: false });
-      return false;
-    }
-    try {
-      setLoading(true);
-      if (id === managerId && password === managerPw) {
-        setUserId(managerId);
-        navigation.navigate('MainScreen', { userId: "관리자" }); // 관리자 전용 화면으로 이동
+    const handleLogin = async () => {
+      if (!id || !password) {
+        Alert.alert("오류", "아이디와 비밀번호를 모두 입력해주세요.", { cancelable: false });
         return;
       }
-      const isLoggedIn = await loginUser(id, password);
-      if (isLoggedIn) {
-        setUserId(id);
-        navigation.navigate('MainScreen', { userId: id });
-      } 
-      else {
-          Alert.alert(
-            "로그인 실패",
-            "ID 또는 PW가 일치하지 않습니다.",
-            { cancelable: false }
-          );
+  
+      setLoading(true);
+  
+      try {
+        if (id === managerId && password === managerPw) {
+          setUserId(managerId);
+          navigation.navigate('ManagerPage', { userId: "관리자" }); // 관리자 전용 화면으로 이동
+        } else {
+          const isLoggedIn = await loginUser(id, password);
+          if (isLoggedIn) {
+            setUserId(id);
+            navigation.navigate('MainScreen', { userId: id });
+          } else {
+            Alert.alert("로그인 실패", "ID 또는 PW가 일치하지 않습니다.", { cancelable: false });
+          }
+        }
+      } catch (error) {
+        console.error("로그인 중 에러 발생:", error);
+        Alert.alert("로그인 중 에러 발생했습니다. 다시 시도해주세요.");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("로그인 중 에러 발생:", error);
-      Alert.alert("로그인 중 에러 발생했습니다. 다시 시도해주세요.");
-    }
-    finally {
-      setLoading(false);
-    }
-  };
+    };
 
   return (
     <View style={styles.container}>
