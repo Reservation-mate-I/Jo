@@ -1,7 +1,7 @@
 {
-  "name": "project",
+  "name": "test01",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,44 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/webpack-config": "^19.0.1",
-    "@firebase/database": "^1.0.1",
-    "@react-native-async-storage/async-storage": "^1.23.1",
-    "@react-native-community/datetimepicker": "^7.6.2",
-    "@react-native-community/masked-view": "^0.1.11",
-    "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
-    "date-fns": "^2.30.0",
-    "expo": "~49.0.11",
-    "expo-camera": "~13.4.4",
-    "expo-linear-gradient": "^12.5.0",
-    "expo-status-bar": "~1.6.0",
-    "firebase": "^9.6.6",
-    "react": "^18.3.1",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.11.0",
-    "react-native": "0.72.4",
-    "react-native-calendars": "^1.1301.0",
-    "react-native-gesture-handler": "^2.16.0",
-    "react-native-keyboard-aware-scroll-view": "^0.9.5",
-    "react-native-linear-gradient": "^2.8.3",
-    "react-native-reanimated": "^3.8.1",
-    "react-native-responsive-screen": "^1.4.2",
+    "expo": "~51.0.8",
+    "expo-status-bar": "~1.12.1",
+    "react": "18.2.0",
+    "react-native": "0.74.1",
     "react-native-safe-area-context": "^4.10.1",
-    "react-native-screens": "^3.31.1",
-    "react-native-vector-icons": "^10.0.0",
-    "react-native-web": "~0.19.10"
+    "react-native-screens": "^3.31.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@types/react": "~18.2.79",
-    "@types/react-native": "^0.72.2",
-    "typescript": "~5.3.3"
+    "@babel/core": "^7.20.0"
   },
-  "private": true,
-  "description": "프로젝트 소개\r 팀원 구성\r 개발 환경\r 프로젝트 구조\r 역할분담\r 개발기간\r 참고 및 출처\r 버전 및 업데이트 정보\r FAQ",
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "private": true
 }
