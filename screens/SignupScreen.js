@@ -5,7 +5,7 @@ import { getDatabase, ref, set, get } from 'firebase/database';
 
 const { width } = Dimensions.get('window');
 
-export default function SignupScreen({ navigation }) {
+const SignupScreen = () =>{
   const [id, setId] = React.useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,6 +28,7 @@ export default function SignupScreen({ navigation }) {
   };
   
   const handleSignUp = async () => {
+    console.log('his');
     const db = getDatabase();
 
     if (password !== confirmPassword) {
@@ -51,7 +52,7 @@ export default function SignupScreen({ navigation }) {
         phone: phone
       });
       alert("회원가입이 성공적으로 완료되었습니다.");
-      navigation.navigate('LoginPage');
+      navigation.navigate('LoginScreen');
     }
 
   };
@@ -176,3 +177,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
+export default SignupScreen;
