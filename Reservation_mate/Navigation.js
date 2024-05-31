@@ -12,6 +12,7 @@ import SignUpScreen from './SignUp/SignUpScreen';
 import LoginPage from './LoginPage';
 import MyPage from './MyPage/MyPage';
 import RS_Check from './RS_Check/RS_Check';
+import PasswordChangeScreen from './MyPage/PasswordChangeScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ function StackScreen(){
       <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
       <Stack.Screen name="MyPage" component={MyPage} options={{ headerShown: false }} />
       <Stack.Screen name="RS_Check" component={RS_Check} options={{ headerShown: false }} />
+      <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

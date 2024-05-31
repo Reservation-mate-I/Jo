@@ -11,17 +11,22 @@ const MainScreen = ({ navigation, route }) => {
   const handleRS_Check = () => {
     navigation.navigate('RS_Check');
   };
+  const handleUserIdPress = () => {
+    navigation.navigate('MyPage', { userId });
+  };
   const { userId } = route.params;
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>메인 화면</Text>
       <View>
-        {userId === '관리자' ? (
-          <Text>관리자님 환영합니다!</Text>
-        ) : (
-          <Text>{userId}님 환영합니다!</Text>
-        )}
+        <TouchableOpacity onPress={handleUserIdPress}>
+          {userId === '관리자' ? (
+            <Text style={styles.userIdText}>관리자님 환영합니다!</Text>
+          ) : (
+            <Text style={styles.userIdText}>{userId}님 환영합니다!</Text>
+          )}
+        </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.GymButton} onPress={handleGym}>
         <Text style={styles.GymButtonText}>체육관</Text>
@@ -46,6 +51,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
   },
+  userIdText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'blue', // 텍스트를 클릭할 수 있게 표시하기 위해 색상 변경
+    textDecorationLine: 'underline', // 밑줄 추가
+  },
   GymButton: {
     marginTop: 20,
     padding: 10,
@@ -63,16 +74,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   BusButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  MyButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: 'lightblue',
-    borderRadius: 5,
-  },
-  MyButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
   },
