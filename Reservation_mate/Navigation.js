@@ -8,13 +8,15 @@ import FootballCenter from './Gym/GymCategory/FootballCenter';
 import Ground from './Gym/GymCategory/Ground';
 import SportsCenter from './Gym/GymCategory/SportsCenter';
 import BusScreen from './Bus/BusScreen';
-import SignUpScreen from './SignUp/SignUpScreen';
+import SignUpScreen from '../screens/SignupScreen';
 import LoginPage from './LoginPage';
 import MyPage from './MyPage/MyPage';
 import RS_Check from './RS_Check/RS_Check';
 import ManagerPage from './Manager/ManagerPage';
 import RS_Approval from './Manager/RS_Approval';
 import SU_Approval from './Manager/SU_Approval';
+import BusSeat from './Bus/BusSeat';
+import PasswordChangeScreen from './MyPage/PasswordChangeScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +36,8 @@ function StackScreen(){
       <Stack.Screen name="ManagerPage" component={ManagerPage} options={{ headerShown: false }} />
       <Stack.Screen name="RS_Approval" component={RS_Approval} options={{ headerShown: false }} />
       <Stack.Screen name="SU_Approval" component={SU_Approval} options={{ headerShown: false }} />
+      <Stack.Screen name="BusSeat" component={BusSeat} options={{ headerShown: false }} />
+      <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

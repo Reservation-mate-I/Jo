@@ -5,13 +5,26 @@ import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';  // expo-linear-gradient import
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+
+
+
+
+
 const BusScreen = () => {
   const { userId } = useUser(); 
   const navigation = useNavigation();
   const handlePress = () => {
-    Alert.alert('Box clicked!');
+    navigation.navigate('BusSeat');
   };
+
+  /*const BusReservation = () => {
+    const navigation = useNavigation();}
   
+    const handleBusSeat = () => {
+      // 다음 화면으로 이동
+      navigation.navigate('BusSeat');
+    };*/
+
   return (
     <UserProvider>
       <View>
@@ -41,7 +54,9 @@ const BusScreen = () => {
       <View style={styles.box}>
         <Text style={styles.boxText}>Can't Touch This!</Text>
       </View>
+      
       <TouchableOpacity style={styles.box} onPress={handlePress}>
+      
         <Text style={styles.boxText}>08:00</Text>
         <Text>x</Text>
         <Text>x</Text>
@@ -73,6 +88,13 @@ const BusScreen = () => {
       </TouchableOpacity>
       </View>
       
+      {/* 하이퍼링크 버튼 */}
+<View style={styles.footer}>
+  <TouchableOpacity onPress={handlePress} style={styles.linkButton}>
+    <Text style={styles.linkButtonText}>통학버스 운행 구간 및 시간표</Text>
+  </TouchableOpacity>
+</View>
+
     </UserProvider>
   );
 };

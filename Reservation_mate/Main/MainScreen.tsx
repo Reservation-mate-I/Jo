@@ -13,6 +13,9 @@ const MainScreen = ({ navigation, route }) => {
   const handleRS_Check = () => {
     navigation.navigate('RS_Check');
   };
+  const handleUserIdPress = () => {
+    navigation.navigate('MyPage', { userId });
+  };
   const { userId } = route.params;
 
   return (
@@ -41,6 +44,7 @@ const MainScreen = ({ navigation, route }) => {
       
       <View style={styles.user}>
         <View style={styles.userBackground}>
+        <TouchableOpacity onPress={handleUserIdPress}>
           <Text style={styles.userText}>
             {userId === '관리자' ? (
               <Text>관리자님 환영합니다!</Text>
@@ -48,6 +52,7 @@ const MainScreen = ({ navigation, route }) => {
               <Text>{userId}님 환영합니다!</Text>
              )}
           </Text>
+          </TouchableOpacity>
         </View>
     </View>
 
