@@ -18,7 +18,8 @@ import LoginScreen from '../screens/LoginScreen';
 import GuestLoginScreen from '../screens/GuestLoginScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import SignupScreen from '../screens/SignupScreen';
-import PasswordChangeScreen from '../screens/PasswordChangeScreen';
+import PasswordChangeScreen from './MyPage/PasswordChangeScreen';
+import { UserProvider } from './UserContext';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,7 @@ function StackScreen(){
       <Stack.Screen name="SportsCenter" component={SportsCenter} options={{ headerShown: false }} />
       <Stack.Screen name="BusScreen" component={BusScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SignupScreen" component={SignupScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: true }} />
       <Stack.Screen name="MyPage" component={MyPage} options={{ headerShown: false }} />
       <Stack.Screen name="RS_Check" component={RS_Check} options={{ headerShown: false }} />
       <Stack.Screen name="ManagerPage" component={ManagerPage} options={{ headerShown: false }} />
@@ -49,9 +50,11 @@ function StackScreen(){
 
 function Navigation() {
   return (
-    <NavigationContainer>
-      <StackScreen/>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <StackScreen/>
+      </NavigationContainer>
+    </UserProvider>
   )
 }
 

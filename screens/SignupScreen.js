@@ -28,7 +28,6 @@ const SignupScreen = () =>{
   };
   
   const handleSignUp = async () => {
-    console.log('his');
     const db = getDatabase();
 
     if (password !== confirmPassword) {
@@ -49,7 +48,8 @@ const SignupScreen = () =>{
       set(userRef, {
         password: password,
         name: name,
-        phone: phone
+        phone: phone,
+        email: email
       });
       alert("회원가입이 성공적으로 완료되었습니다.");
       navigation.navigate('LoginScreen');

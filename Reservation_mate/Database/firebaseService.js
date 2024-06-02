@@ -56,9 +56,9 @@ export const loginUser = async (id, password) => {
     try {
         const db = getDatabase();
         const userRef = ref(db, 'users/' + id);
-        const snapshot = await get(userRef);
-
-        return snapshot.exists() && snapshot.val().password === password;
+        const snapshot = await get(userRef);        
+        
+        return JSON.stringify(snapshot) !== "null" && JSON.stringify(snapshot.val().password).replace(/"/g, '') === password;
     } catch (error) {
         console.error("Error logging in: ", error);
         throw error;

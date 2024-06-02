@@ -1,30 +1,35 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions, Modal } from 'react-native';
+import firebaseService, { loginUser } from '../Reservation_mate/Database/firebaseService';
 
 const { width } = Dimensions.get('window');
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false); // 모달 가시성 상태
-  const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
-  const handleLogin = () => {
-    if (!email || !password) {
+  const handleLogin = async () => {
+    //console.log("!!!");
+    if (!id || !password) {
       setModalMessage('아이디와 비밀번호를 모두 입력해주세요.');
       setModalVisible(true);
       return;
     }
+
+    let loginValid = await loginUser(id, password);
     // 아이디와 비밀번호가 일치하지 않는 경우
-    if (email !== 'expectedEmail' || password !== 'expectedPassword') {
+    if (!loginValid) {
       setModalMessage('로그인 실패\nID 또는 PW가 일치하지 않습니다.');
       setModalVisible(true);
       return;
     }
     // 로그인 로직
-    console.log('Email:', email);
-    console.log('Password:', password);
+    //console.log('Email:', id);
+    //console.log('Password:', password);
+    navigation.navigate('MainScreen', { userId: id });
   };
 
   const toggleRememberMe = () => {
@@ -41,9 +46,9 @@ export default function LoginScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="아이디"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
+        value={id}
+        onChangeText={setId}
+        keyboardType="id-address"
       />
       <TextInput
         style={styles.input}

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { getDatabase, ref, set, get } from 'firebase/database';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ScrollView, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/Ionicons'; // 사용할 아이콘 라이브러리 선택
 import { LinearGradient } from 'expo-linear-gradient';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { sendVerificationCode, verifyCode, verify } from '../Database/firebaseService'; // verify 함수를 import
+
+const { width } = Dimensions.get('window');
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
@@ -61,216 +63,125 @@ const SignUpScreen = () => {
   };
 
   return (
-    <KeyboardAwareScrollView style={styles.container}>
-      <LinearGradient style={styles.headerContainer} colors = {['#a0a0a0','#f8f9fa', '#f8f9fa']}>
-        <View style = {styles.headerbutton}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <View style={styles.backbutton}>
-              <Icon name="ios-arrow-back" size={35}/> 
-            </View>
-          </TouchableOpacity>
-        
-        </View>
-
-        <View style = {styles.headermid}>
-          <Text style={styles.titlestyle}>회원가입</Text>
-          
-
-        </View>
-        <View style={styles.spacer}>
-        </View>     
-      </LinearGradient>
-      
-      <View style = {styles.bodyContainer}>
-        <View style = {styles.bodyfirst}>
-          <Text style = {styles.fontstyle}>학번</Text>
-        
-          <TextInput
-            placeholder="학번"
-            placeholderTextColor="#a0a0a0"
-            style={styles.input}
-            value={id}
-            onChangeText={setId}
-          />
-        </View>
-        <View style = {styles.bodyfirst}>
-          <Text style = {styles.fontstyle}>비밀번호</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="영어, 숫자, 특수기호로 이루어진 4~12자리"
-            placeholderTextColor="#a0a0a0"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={setPassword}
-          />
-        </View>
-        <View style = {styles.bodyfirst}>
-          <Text style = {styles.fontstyle}>비밀번호 확인</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="비밀번호 확인"
-            placeholderTextColor="#a0a0a0"
-            secureTextEntry={true}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          />
-        </View>
-
-        <View style = {styles.bodyfirst}>
-          <Text style = {styles.fontstyle}>이름</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="이름"
-            placeholderTextColor="#a0a0a0"
-            value={name}
-            onChangeText={setName}
-          />
-        </View>
-        
-        <View style = {styles.bodyfirst}>
-          <Text style = {styles.fontstyle}>전화번호</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="전화번호"
-            placeholderTextColor="#a0a0a0"
-            value={phone}
-            onChangeText={setPhone}
-          />
-        </View>
-        <TouchableOpacity onPress={handleSendCode}>
-          <Text>인증 코드 전송</Text>
-        </TouchableOpacity>
-        <TextInput
-          placeholder="인증 코드"
-          value={verificationCode}
-          onChangeText={setVerificationCode}
-        />
-        <TouchableOpacity onPress={handleVerifyCode}>
-          <Text>인증 코드 확인</Text>
-        </TouchableOpacity>
-        <View style = {styles.bodyfirst}>
-          <TouchableOpacity
-            style={styles.signupButton}
-            onPress={handleSignUp}
-          >
-            <Text style={styles.signupfont}>가입하기</Text>
-          </TouchableOpacity>
-        </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.header}>회원가입</Text>
       </View>
-      <View style = {styles.bottomContainer}>
-      </View> 
-    </KeyboardAwareScrollView>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>학번(아이디) <Text style={styles.required}>*</Text></Text>
+        <TextInput
+          style={styles.input}
+          placeholder="학번"
+          value={studentId}
+          onChangeText={setStudentId}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>비밀번호 <Text style={styles.required}>*</Text></Text>
+        <TextInput
+          style={styles.input}
+          placeholder="영어, 숫자, 특수기호로 이루어진 4~12자리"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>비밀번호 확인 <Text style={styles.required}>*</Text></Text>
+        <TextInput
+          style={styles.input}
+          placeholder="비밀번호 확인"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>이름 <Text style={styles.required}>*</Text></Text>
+        <TextInput
+          style={styles.input}
+          placeholder="이름"
+          value={name}
+          onChangeText={setName}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>전화번호 <Text style={styles.required}>*</Text></Text>
+        <TextInput
+          style={styles.input}
+          placeholder="전화번호"
+          value={phone}
+          onChangeText={setPhone}
+          keyboardType="phone-pad"
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>메일주소 <Text style={styles.required}>*</Text></Text>
+        <TextInput
+          style={styles.input}
+          placeholder="이메일"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+      </View>
+      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+        <Text style={styles.signupButtonText}>가입하기</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: hp('100%'),
-    
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#f7f7f7',
   },
   headerContainer: {
     width: '100%',
-    flex: 1,
-    height: hp('15%'),
-    flexDirection: 'row',
-    top: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-    
+    marginTop: -30, // 상단 여백 추가
+    marginBottom: 50, // 하단 여백 추가
   },
-  headerbutton: {
-    width: wp('22%'),
-    flex: 1,
-    left: 0,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-  },
-  headermid: {
-    width: wp('22%'),
-    flex: 1,
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titlestyle: {
-    color: 'black',
-    fontSize: wp('6%'),
+  header: {
+    fontSize: 35,
     fontWeight: 'bold',
-    top: hp('2%'),
+    color: '#00274d',
   },
-  spacer: {
-    width: wp('18%'),
-    
-    height: '100%',
-    flex: 1,
+  inputContainer: {
+    width: '100%',
+    marginBottom: 15,
   },
-  backbutton: {
-    top: hp('2%'),
-    left: wp('1%'),
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
   },
-  bodyContainer: {
-    height: hp('68%'),
-    width: wp('100%'),
-    backgroundColor: '#f8f9fa',
-    alignItems: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bodyfirst: {
-    height: hp('5%'),
-    flexDirection: 'column', 
-    alignItems: 'flex-start',
-    margin: hp('3%'),
-  },
-  fontstyle: {
-    margin: hp('1%'),
-    margin: wp('1%'),
-    fontWeight: 'bold',
+  required: {
+    color: 'red',
   },
   input: {
-    width: hp('35%'),
-    height: hp('6%'),
-    padding: wp('3%'),
-    margin: hp('1%'),
-    margin: wp('1%'),
-    backgroundColor: 'white', 
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
     borderWidth: 1,
-    borderColor: '#ced4da',
-
+    paddingLeft: 10,
+    backgroundColor: '#fff',
   },
   signupButton: {
-    width: hp('35%'),
-    height: hp('6%'),
-    padding: wp('3%'),
-    margin: hp('1%'),
-    margin: wp('1%'),
-    backgroundColor: '#808080', 
-    borderWidth: 1,
-    borderColor: '#ced4da',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  signupfont: {
-    margin: hp('1%'),
-    margin: wp('1%'),
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  bottomContainer: {
-    bottom: 0,
+    backgroundColor: '#000',
+    padding: 15,
     width: '100%',
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    height: hp('17%'),
-    backgroundColor: '#f8f9fa',
+    marginTop: 20,
   },
-  bottomImageStyle: {
-    width: wp('40%'),
-    height: hp('15s%'),
+  signupButtonText: {
+    color: '#fff',
+    fontSize: 18,
   },
 });
+
 
 export default SignUpScreen;

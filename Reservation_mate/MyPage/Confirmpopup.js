@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet, Dimensions } from 'react-native';
 
 const ConfirmPopup = ({ visible, onCancel, onConfirm, onChangeText, value }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={visible}>
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
+        <View style={[styles.modalView, { width: Dimensions.get('window').width * 0.8 }]}> {/* Modal의 너비를 화면 너비의 80%로 설정 */}
           <TextInput
             style={styles.input}
             placeholder="현재 비밀번호를 입력하세요"
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     width: '100%',
+    maxWidth: '100%', // 최대 너비 설정
   },
   buttonsContainer: {
     flexDirection: 'row',

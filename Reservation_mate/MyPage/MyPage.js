@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, Modal, TextInput, Alert, Image } from 'react-native';
 import { getDatabase, ref, get, remove } from 'firebase/database';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
-import ImagePicker from 'react-native-image-picker';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-
 
 const MyPage = ({ route }) => {
   const navigation = useNavigation();
@@ -14,6 +12,7 @@ const MyPage = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [password, setPassword] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -36,81 +35,33 @@ const MyPage = ({ route }) => {
     fetchUserData();
   }, [userId]);
 
-  const MyPage = () => {
-    const [selectedImage, setSelectedImage] = useState(null);
-  
-    const handleImageSelect = (isCamera) => {
-      const options = {
-        mediaType: 'photo',
-        quality: 0.5,
-        maxWidth: 500,
-        maxHeight: 500,
-      };
-  
-      if (isCamera) {
-        launchCamera(options, (response) => {
-          handleImageResponse(response);
-        });
-      } else {
-        launchImageLibrary(options, (response) => {
-          handleImageResponse(response);
-        });
-      }
+  const handleImageSelect = (isCamera) => {
+    const options = {
+      mediaType: 'photo',
+      quality: 0.5,
+      maxWidth: 500,
+      maxHeight: 500,
     };
-  
-    const handleImageResponse = (response) => {
-      if (response.didCancel) {
-        console.log('사용자가 선택을 취소했습니다.');
-      } else if (response.error) {
-        console.log('에러 발생:', response.error);
-      } else {
-        setSelectedImage({ uri: response.uri });
-      }
-    };
-  
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity
-          style={{
-            width: 200,
-            height: 200,
-            backgroundColor: 'lightgray',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          onPress={() => {
-            Alert.alert(
-              '사진 추가',
-              '사진을 추가할 방법을 선택하세요.',
-              [
-                {
-                  text: '앨범에서 선택',
-                  onPress: () => handleImageSelect(false),
-                },
-                {
-                  text: '카메라로 찍기',
-                  onPress: () => handleImageSelect(true),
-                },
-                {
-                  text: '취소',
-                  style: 'cancel',
-                },
-              ],
-              { cancelable: true }
-            );
-          }}
-        >
-          {selectedImage ? (
-            <Image
-              source={{ uri: selectedImage.uri }}
-              style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
-            />
-          ) : (
-            <Text>사진 추가</Text>
-          )}
-        </TouchableOpacity>
-      </View>
-    );
+
+    if (isCamera) {
+      launchCamera(options, (response) => {
+        handleImageResponse(response);
+      });
+    } else {
+      launchImageLibrary(options, (response) => {
+        handleImageResponse(response);
+      });
+    }
+  };
+
+  const handleImageResponse = (response) => {
+    if (response.didCancel) {
+      console.log('사용자가 선택을 취소했습니다.');
+    } else if (response.error) {
+      console.log('에러 발생:', response.error);
+    } else {
+      setSelectedImage({ uri: response.assets[0].uri });
+    }
   };
 
   const handlePasswordChange = () => {
@@ -120,9 +71,9 @@ const MyPage = ({ route }) => {
   const handleDeleteAccount = () => {
     setModalVisible(true);
   };
+
   const handleLogout = () => {
-    // 로그아웃 기능 구현
-    navigation.navigate('LoginPage');
+    navigation.navigate('LoginScreen');
   };
 
   const cancelDeleteAccount = () => {
@@ -132,7 +83,6 @@ const MyPage = ({ route }) => {
 
   const confirmDeleteAccount = async () => {
     try {
-      // 현재 비밀번호 확인 후 회원 탈퇴 처리
       const db = getDatabase();
       const userRef = ref(db, `users/${userId}/password`);
       const snapshot = await get(userRef);
@@ -140,9 +90,9 @@ const MyPage = ({ route }) => {
       if (password === savedPassword) {
         await remove(ref(db, `users/${userId}`));
         setModalVisible(false);
-        navigation.navigate('LoginPage');
+        navigation.navigate('LoginScreen');
       } else {
-        alert('비밀번호가 일치하지 않습니다.');
+        Alert.alert('알림', '비밀번호가 일치하지 않습니다.');
       }
     } catch (error) {
       console.error('Error deleting account:', error);
@@ -185,7 +135,72 @@ const MyPage = ({ route }) => {
         <TouchableOpacity onPress={handleDeleteAccount}>
           <Text style={styles.deleteAccountButton}>회원 탈퇴</Text>
         </TouchableOpacity>
+
+        {/* 프로필 사진 추가 */}
+        <TouchableOpacity
+          style={styles.imageUploadButton}
+          onPress={() => {
+            Alert.alert(
+              '사진 추가',
+              '사진을 추가할 방법을 선택하세요.',
+              [
+                {
+                  text: '앨범에서 선택',
+                  onPress: () => handleImageSelect(false),
+                },
+                {
+                  text: '카메라로 찍기',
+                  onPress: () => handleImageSelect(true),
+                },
+                {
+                  text: '취소',
+                  style: 'cancel',
+                },
+              ],
+              { cancelable: true }
+            );
+          }}
+        >
+          {selectedImage ? (
+            <Image
+              source={{ uri: selectedImage.uri }}
+              style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
+            />
+          ) : (
+            <Text>사진 추가</Text>
+          )}
+        </TouchableOpacity>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>계정을 삭제하려면 비밀번호를 입력하세요:</Text>
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              placeholder="비밀번호"
+            />
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity style={styles.button} onPress={confirmDeleteAccount}>
+                <Text style={styles.buttonText}>확인</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={cancelDeleteAccount}>
+                <Text style={styles.buttonText}>취소</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -287,6 +302,14 @@ const styles = StyleSheet.create({
     color: '#007bff',
     textDecorationLine: 'underline',
     marginTop: 10,
+  },
+  imageUploadButton: {
+    width: 200,
+    height: 200,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
   },
 });
 
