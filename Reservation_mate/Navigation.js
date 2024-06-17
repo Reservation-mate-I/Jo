@@ -43,7 +43,7 @@ function StackScreen(){
       <Stack.Screen name="GuestLogin" component={GuestLoginScreen} options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ headerTitle: '', headerTransparent: true }} />
       <Stack.Screen name="Signup" component={SignupScreen} options={{ headerTitle: '', headerTransparent: true }} />
-      <Stack.Screen name="PasswordChange" component={PasswordChangeScreen} options={{ headerTitle: '', headerTransparent: true }} />
+      <Stack.Screen name="PasswordChangeScreen" component={PasswordChangeScreen} options={{ headerTitle: '', headerTransparent: true }} />
     </Stack.Navigator>
   );
 };

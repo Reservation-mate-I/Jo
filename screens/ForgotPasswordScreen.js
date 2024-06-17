@@ -4,7 +4,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Dimens
 const { width } = Dimensions.get('window');
 
 export default function ForgotPasswordScreen({ navigation }) {
-  const [studentId, setStudentId] = useState('');
+  const [userId, setuserId] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   const handleFindPassword = () => {
     // 비밀번호 찾기 로직
-    console.log('Student ID:', studentId);
+    console.log('User ID:', userId);
     console.log('Name:', name);
     console.log('Phone:', phone);
     console.log('Email:', email);
@@ -23,7 +23,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   const handleOkPress = () => {
     setModalVisible(false);
-    navigation.navigate('PasswordChange', { studentId }); // PasswordChangeScreen으로 이동하며 studentId를 전달
+    navigation.navigate('PasswordChangeScreen', { userId: userId }); // PasswordChangeScreen으로 이동하며 studentId를 전달
   };
 
   return (
@@ -37,8 +37,8 @@ export default function ForgotPasswordScreen({ navigation }) {
           <TextInput
             style={styles.input}
             placeholder="학번"
-            value={studentId}
-            onChangeText={setStudentId}
+            value={userId}
+            onChangeText={setuserId}
           />
         </View>
         <View style={styles.inputContainer}>
