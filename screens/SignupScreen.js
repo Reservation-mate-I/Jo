@@ -6,7 +6,8 @@ import { getDatabase, ref, set, get } from 'firebase/database';
 const { width } = Dimensions.get('window');
 
 const SignupScreen = () =>{
-  const [id, setId] = React.useState('');
+  const navigation = useNavigation();
+  const [userId, setuserId] = React.useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
@@ -39,7 +40,7 @@ const SignupScreen = () =>{
       return;
     }
 
-    const userRef = ref(db, 'users/' + id);
+    const userRef = ref(db, 'users/' + userId);
     const snapshot = await get(userRef);
 
     if (snapshot.exists()) {
@@ -52,7 +53,7 @@ const SignupScreen = () =>{
         email: email
       });
       alert("회원가입이 성공적으로 완료되었습니다.");
-      navigation.navigate('LoginScreen');
+      navigation.goBack();
     }
 
   };
@@ -67,8 +68,8 @@ const SignupScreen = () =>{
         <TextInput
           style={styles.input}
           placeholder="학번"
-          value={id}
-          onChangeText={setId}
+          value={userId}
+          onChangeText={setuserId}
         />
       </View>
       <View style={styles.inputContainer}>

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Linking } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { getDatabase, ref, onValue, off } from 'firebase/database';
 import { format } from 'date-fns';
 
 const BusScreen = () => {
-  console.log("123123");
   const navigation = useNavigation();
+  const route = useRoute();  // useRoute 사용
+  const { userId } = route.params;
   const totalSeats = 45; // 전체 좌석 수를 상수로 정의
   const [busData, setBusData] = useState([
     { time: '08:00', wonju: 'X', seats: `${totalSeats} / ${totalSeats}` },
@@ -68,7 +69,7 @@ const BusScreen = () => {
   };
 
   const handlePress = (time) => {
-    navigation.navigate('BusSeat', { time });
+    navigation.navigate('BusSeat', { time, userId });
   };
 
   const handleLinkPress = () => {

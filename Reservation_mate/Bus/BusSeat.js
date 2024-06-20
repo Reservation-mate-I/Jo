@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ImageBackground, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useUser, UserProvider } from '../UserContext';
 import { getDatabase, ref, set, onValue } from 'firebase/database';
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase Authentication 관련 import 추가
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { LinearGradient } from 'expo-linear-gradient';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const BusSeat = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { time } = route.params; // 시간(time) 파라미터를 route에서 가져옴
-  const { userId } = useUser();
+  const { time } = route.params;
+  const { userId } = route.params; // useUser 훅을 사용하여 userId 상태 가져오기
   const [selectedSeat, setSelectedSeat] = useState(null);
-  const [userUid, setUserUid] = useState(null); // 사용자 UID 상태 추가
   const [reservedSeats, setReservedSeats] = useState([]);
 
-  // Firebase Authentication 초기화
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserUid(user.uid); // 인증된 사용자의 UID를 상태로 설정
+        setUserUid(userId);
       } else {
-        setUserUid(null); // 사용자가 로그아웃한 경우 초기화
+        setUserUid(null);
       }
     });
 
-    // 예약된 좌석 데이터 가져오기
     const fetchReservedSeats = async () => {
       const db = getDatabase();
       const reservationRef = ref(db, `reservations/Buses/${getCurrentDate()}/${time}`);
@@ -44,7 +40,6 @@ const BusSeat = () => {
   }, [time]);
 
   const handleSeatSelection = async (seatNumber) => {
-    // 이미 예약된 좌석인지 확인
     if (reservedSeats.includes(seatNumber)) {
       Alert.alert('알림', '이미 예약된 좌석입니다.');
       return;
@@ -58,10 +53,10 @@ const BusSeat = () => {
       return;
     }
 
-    const busTime = time; // 선택된 시간을 가져옴
-    const formattedDate = getCurrentDate(); // 예약할 날짜
+    const busTime = time;
+    const formattedDate = getCurrentDate();
     const reservationData = {
-      [userUid]: selectedSeat, // 사용자 UID로 좌석 예약 데이터 저장
+      [userId]: selectedSeat,
     };
 
     try {
@@ -70,7 +65,8 @@ const BusSeat = () => {
       await set(reservationRef, reservationData);
 
       Alert.alert('알림', '버스 좌석 예약이 성공적으로 완료되었습니다!');
-      navigation.goBack();
+      console.log(userId);
+      navigation.goBack(selectedSeat);
     } catch (error) {
       console.error(error);
       Alert.alert('알림', '예약 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -83,7 +79,6 @@ const BusSeat = () => {
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    // 한 자리 수일 경우 앞에 0을 붙여줍니다.
     if (month < 10) {
       month = `0${month}`;
     }
@@ -94,7 +89,6 @@ const BusSeat = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // 1부터 45까지의 좌석 번호를 가지는 버튼들을 생성합니다.
   const renderSeatButtons = () => {
     const seatButtons = [];
     for (let i = 1; i <= 45; i++) {
@@ -106,9 +100,9 @@ const BusSeat = () => {
             styles.seat,
             selectedSeat === i && styles.selectedSeat,
             isReserved && styles.reservedSeat,
-          ]} // 선택된 좌석 및 예약된 좌석 스타일 적용
+          ]}
           onPress={() => handleSeatSelection(i)}
-          disabled={isReserved} // 예약된 좌석은 클릭 불가능하도록 설정
+          disabled={isReserved}
         >
           <Text style={[styles.seatText, isReserved && styles.reservedSeatText]}>{i}</Text>
         </TouchableOpacity>
@@ -118,36 +112,34 @@ const BusSeat = () => {
   };
 
   return (
-    <UserProvider>
-      <View>
-        <View style={styles.header}>
-          <LinearGradient style={styles.headerContainer} colors={['#bfe1fb', '#bfe1fb']}>
-            <View style={styles.imageContainer}>
-              <ImageBackground
-                source={require('../../assets/GWNU-LOGO.png')}
-                style={styles.imageStyle}
-                resizeMode="contain"
-              />
-            </View>
-            <View style={styles.textContainer}>
-              <Text style={styles.textStyle}>국립 강릉원주대학교</Text>
-              <Text style={styles.subHeader}>GANGNEUNG-WONJU NATIONAL UNIVERSITY</Text>
-            </View>
-            <View style={styles.spacer} />
-          </LinearGradient>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
-            <ImageBackground source={require('../../assets/back-icon.png')} style={styles.backIcon} resizeMode="contain" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.title}>버스 좌석 예약</Text>
-          <View style={styles.seatContainer}>{renderSeatButtons()}</View>
-          <TouchableOpacity style={styles.completeButton} onPress={handleReservation}>
-            <Text style={styles.completeButtonText}>선택 완료</Text>
-          </TouchableOpacity>
-        </View>
+    <View>
+      <View style={styles.header}>
+        <LinearGradient style={styles.headerContainer} colors={['#bfe1fb', '#bfe1fb']}>
+          <View style={styles.imageContainer}>
+            <ImageBackground
+              source={require('../../assets/GWNU-LOGO.png')}
+              style={styles.imageStyle}
+              resizeMode="contain"
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.textStyle}>국립 강릉원주대학교</Text>
+            <Text style={styles.subHeader}>GANGNEUNG-WONJU NATIONAL UNIVERSITY</Text>
+          </View>
+          <View style={styles.spacer} />
+        </LinearGradient>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIconContainer}>
+          <ImageBackground source={require('../../assets/back-icon.png')} style={styles.backIcon} resizeMode="contain" />
+        </TouchableOpacity>
       </View>
-    </UserProvider>
+      <View style={styles.container}>
+        <Text style={styles.title}>버스 좌석 예약</Text>
+        <View style={styles.seatContainer}>{renderSeatButtons()}</View>
+        <TouchableOpacity style={styles.completeButton} onPress={handleReservation}>
+          <Text style={styles.completeButtonText}>선택 완료</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -230,17 +222,17 @@ const styles = StyleSheet.create({
     margin: wp('2%'),
   },
   selectedSeat: {
-    backgroundColor: 'green', // 선택된 좌석의 배경색을 변경합니다.
+    backgroundColor: 'green',
   },
   reservedSeat: {
-    backgroundColor: 'red', // 예약된 좌석의 배경색을 변경합니다.
+    backgroundColor: 'red',
   },
   seatText: {
     color: 'white',
     fontWeight: 'bold',
   },
   reservedSeatText: {
-    color: 'white', // 예약된 좌석의 텍스트 색상을 변경합니다.
+    color: 'white',
   },
   completeButton: {
     backgroundColor: 'blue',

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ImageBackground, Image, Alert } from 'react-native';
 import { useUser, UserProvider } from '../UserContext';
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';  // expo-linear-gradient import
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const iconsData = [
   { id: 1, name: '풋살장', engName: 'FootballCenter', position: { top: 200 }, 
@@ -16,10 +16,11 @@ const iconsData = [
 ];
 
 const GymRvmain = () => {
-  const { userId } = useUser(); 
+  const route = useRoute();
+  const { userId } = route.params;
   const navigation = useNavigation();
   const handleIconClick = (engName) => {
-    navigation.navigate(engName);
+    navigation.navigate(engName, { userId });
   };  
   
   return (

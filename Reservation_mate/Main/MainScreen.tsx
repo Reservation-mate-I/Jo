@@ -3,15 +3,16 @@ import { View, Text, TouchableOpacity, StyleSheet ,ImageBackground, Image} from 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { LinearGradient } from 'expo-linear-gradient';
 
+
 const MainScreen = ({ navigation, route }) => {
   const handleGym = () => {
-    navigation.navigate('GymRvmain');
+    navigation.navigate('GymRvmain', { userId });
   };
   const handleBus = () => {
-    navigation.navigate('BusScreen');
+    navigation.navigate('BusScreen', { userId });
   };
   const handleRS_Check = () => {
-    navigation.navigate('RS_Check');
+    navigation.navigate('RS_Check', { userId });
   };
   const handleUserIdPress = () => {
     navigation.navigate('MyPage', { userId });

@@ -7,7 +7,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginPage = () => {
-  const [id, setId] = React.useState('');
+  const [userId, setuserId] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = useState(false);
     const {setUserId } = useUser();
@@ -24,14 +24,14 @@ const LoginPage = () => {
       setLoading(true);
   
       try {
-        if (id === managerId && password === managerPw) {
+        if (userId === managerId && password === managerPw) {
           setUserId(managerId);
           navigation.navigate('ManagerPage', { userId: "관리자" }); // 관리자 전용 화면으로 이동
         } else {
-          const isLoggedIn = await loginUser(id, password);
+          const isLoggedIn = await loginUser(userId, password);
           if (isLoggedIn) {
-            setUserId(id);
-            navigation.navigate('MainScreen', { userId: id });
+            setUserId(userId);
+            navigation.navigate('MainScreen', { userId });
           } else {
             Alert.alert("로그인 실패", "ID 또는 PW가 일치하지 않습니다.", { cancelable: false });
           }
@@ -74,8 +74,8 @@ const LoginPage = () => {
               style={styles.input}
               placeholder="아이디"
               placeholderTextColor="#808080" 
-              value={id}
-              onChangeText={setId}
+              value={userId}
+              onChangeText={setuserId}
             />
             <TextInput
               style={styles.input}

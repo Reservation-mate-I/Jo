@@ -5,7 +5,7 @@ import firebaseService, { loginUser } from '../Reservation_mate/Database/firebas
 const { width } = Dimensions.get('window');
 
 export default function LoginScreen({ navigation }) {
-  const [id, setId] = useState('');
+  const [userId, setuserId] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,13 +13,13 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = async () => {
     //console.log("!!!");
-    if (!id || !password) {
+    if (!userId || !password) {
       setModalMessage('아이디와 비밀번호를 모두 입력해주세요.');
       setModalVisible(true);
       return;
     }
 
-    let loginValid = await loginUser(id, password);
+    let loginValid = await loginUser(userId, password);
     // 아이디와 비밀번호가 일치하지 않는 경우
     if (!loginValid) {
       setModalMessage('로그인 실패\nID 또는 PW가 일치하지 않습니다.');
@@ -29,7 +29,8 @@ export default function LoginScreen({ navigation }) {
     // 로그인 로직
     //console.log('Email:', id);
     //console.log('Password:', password);
-    navigation.navigate('MainScreen', { userId: id });
+    navigation.navigate('MainScreen', { userId });
+    console.log(userId);
   };
 
   const toggleRememberMe = () => {
@@ -46,8 +47,8 @@ export default function LoginScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="아이디"
-        value={id}
-        onChangeText={setId}
+        value={userId}
+        onChangeText={setuserId}
         keyboardType="id-address"
       />
       <TextInput

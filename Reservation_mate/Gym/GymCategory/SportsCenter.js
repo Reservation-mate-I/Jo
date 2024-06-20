@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ImageBackground, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useUser, UserProvider } from '../../UserContext';
 import DatePicker from '../DandT/Date/DatePicker';
 import STimePicker from '../DandT/Time/STimePicker'; 
@@ -10,7 +10,8 @@ import { LinearGradient } from 'expo-linear-gradient';  // expo-linear-gradient 
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const SportsCenter = () => {
-  const { userId } = useUser();
+  const route = useRoute();
+  const { userId } = route.params;
   const navigation = useNavigation();
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedStartTime, setSelectedStartTime] = useState('');
@@ -77,6 +78,7 @@ const SportsCenter = () => {
       await set(RSDataRef, RSData);
       
       Alert.alert('알림', '예약이 성공적으로 완료되었습니다!');
+      navigation.goBack();
     } catch (error) {
       console.error(error);
       Alert.alert('알림', '예약 중 오류가 발생했습니다. 다시 시도해주세요.');

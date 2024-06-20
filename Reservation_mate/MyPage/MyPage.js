@@ -45,6 +45,7 @@ const MyPage = ({ route }) => {
   const handleLogout = () => {
     navigation.navigate('LoginScreen');
   };
+  console.log(userId);
 
   const cancelDeleteAccount = () => {
     setModalVisible(false);

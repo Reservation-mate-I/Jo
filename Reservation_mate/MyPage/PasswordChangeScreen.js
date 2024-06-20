@@ -30,11 +30,13 @@ const PasswordChangeScreen = ({ route }) => {
 
     fetchUserData();
   }, [userId]);
+  
 
   const handleUpdatePassword = async () => {
     if (!userInfo) {
       return;
     }
+    
 
     if (password !== userInfo.password) {
       Alert.alert("현재 비밀번호가 일치하지 않습니다.");
